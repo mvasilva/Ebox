@@ -1,0 +1,19 @@
+﻿@using ELOS.Framework.Util
+
+@model Elos.Procedimentos.Model.Documento
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_GridHistorico", Model.Historicos)
+    </div>
+</div>
+
+
+@if((Util.PermissaoAtual.Valor & 15) == 15){
+
+<div class="row">
+    <div class="col-md-12" id="divHistoricoArquivos">
+        @Html.Partial("_GridArquivos", Model)
+    </div>
+</div>
+}

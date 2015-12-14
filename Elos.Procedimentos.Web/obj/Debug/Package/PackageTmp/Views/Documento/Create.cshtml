@@ -1,0 +1,363 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+@using ELOS.Framework.Util
+@using ELOS.Framework.Helpers
+
+@model Elos.Procedimentos.Model.Documento
+
+<div class='well row' style='margin-bottom:0px;'>
+    <div class="title">
+        <h2>@Util.PermissaoAtual.Nome</h2>
+        <div class="pull-right">
+            <div>
+                <a href="#" class="information" data-toggle="modal" data-target="#ModalDescricao">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                </a>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDescricao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Descrição</h4>
+            </div>
+            <div id="mbody" class="modal-body">
+
+                @(new HtmlString(Util.PermissaoAtual.Descricao))
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="row well" style="margin-top:20px;">
+
+
+
+
+    <div class="col-md-12 ">
+        @if (ViewBag.objReturn != null)
+        {
+            switch ((int)ViewBag.objReturn)
+            {
+
+                case 0:
+                case -1:
+                    <div class="alert alert-dismissable alert-danger">
+                        <p><strong>Erro</strong>. Cadastro não realizado.</p>
+                    </div>
+                    break;
+
+                default:
+                <div class="alert alert-dismissable alert-success">
+                    <p>
+                        Cadastro realizado com <strong>sucesso!</strong>.
+
+                    </p>
+                </div>
+                    break;
+
+            }
+        }
+
+        @using (Html.BeginForm("Upload", "Documento", FormMethod.Post, new { enctype = "multipart/form-data", @class = "validation-form" }))
+        {
+
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.Partial("_Arvore")
+
+                    @Html.HiddenFor(model => model.Categoria.Codigo, new { id = "hddCategoria" })
+                </div>
+                <div class="col-md-6">
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Título</label>
+                            <br />
+                            @Html.HiddenFor(model => model.Codigo, new { id = "hddCodigoDocumento" })
+                            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control input-sm", id = "txtTitulo" })
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Descrição</label>
+                            <br />
+                            @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", id = "txtDescricao", row = "3" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>O que há de novo?</label>
+                            <br />
+                            @Html.TextAreaFor(model => model.Historico.Novidade, new { @class = "form-control", id = "txtNovidade", row = "3" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label>Publicar?</label>
+                        <br>
+                        @Html.DropDownListFor(model => model.IsPublicar, ViewBag.Publicar as SelectList, new { @class = "form-control input-sm", id = "cboPublicar" })
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label>TAGS</label>
+                    @Html.TextBoxFor(model => model.Tags, new { @class = "form-control input-sm", id = "txtTags" })
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label>Anexar:</label>
+                    <br>
+                    <div class="form-control-file">
+                        <input type="file" name="file" id="file" title="Buscar arquivo" />
+                    </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label>Perfil</label>
+                    <br />
+                    @Html.ListBoxFor(model => model.PerfilSelected, ViewBag.Perfil as MultiSelectList, new { @class = "form-control input-sm selectpicker", data_selected_text_format = "count>2", title = "Todos", id = "cboPerfil" })
+                </div>
+
+            </div>
+
+           
+
+            <div class="row form-actions text-center">
+                <a class="btn btn-default" href="@Url.Action("Index")">Voltar</a>
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-floppy-saved">&nbsp;</span>
+                    Salvar
+                </button>
+            </div>
+
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col-md-12" id="divHistoricoArquivos">
+
+                    @Html.Partial("_GridArquivos", Model)
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    @Html.Partial("_GridHistorico", Model.Historicos)
+
+                </div>
+            </div>
+
+
+
+
+        }
+
+
+
+    </div>
+
+
+
+
+</section>
+
+
+
+<div class="modal fade" id="ModalDescricao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Descrição</h4>
+            </div>
+            <div id="mbody" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+
+
+        var strLoading = $("<table style='width: 100%; min-height: 100px;'><tr><td style='text-align: center;'><img src='@Url.Content("~/img/ajax-loader.gif")' /></td></tr></table>");
+        @Html.call_AjaxJson();
+        @Html.call_AjaxHtml();
+
+
+
+
+        var _tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Nome'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '@Url.Action("GetTags")/%QUERY',
+                wildcard: '%QUERY'
+            }
+        });
+
+
+
+
+        $(document).ready(function () {
+
+            InitMultiCombos();
+
+
+            actionCarregar = "@Url.Action("GetCategorias")";
+
+            @if (ViewBag.ControleAcesso) {
+                <text>
+
+            actionCriar = "@Url.Action("CriarCategoria")";
+            actionPublicar = "@Url.Action("PublicarCategoria")";
+            actionDeletar = "@Url.Action("DeletarCategoria")";
+            actionAtualizarArquivo = "@Url.Action("AtualizarArquivo")";
+            </text>
+
+            }
+            CallAjaxArvore();
+
+            _tags.initialize();
+
+            $('#txtTags').tagsinput({
+                trimValue: true,
+                maxChars: 20,
+                cancelConfirmKeysOnEmpty: false,
+                typeaheadjs: {
+                    name: 'Tags',
+                    displayKey: 'Nome',
+                    valueKey: 'Nome',
+                    source: _tags
+                }
+            });
+
+
+            LoadConfirmInline();
+
+            $('[data-toggle=offcanvas]').click(function () {
+                $('.row-offcanvas').toggleClass('active');
+            });
+
+
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover',
+                placement: 'left',
+
+            });
+
+            $('.lnkDescricao').click(function (e) {
+                e.preventDefault();
+                $('.modal-title').html($(this).attr("title"));
+                $('.modal-body').html($(this).attr("alt"));
+                $('#ModalDescricao').modal('show');
+            });
+
+
+            $('.validation-form').validate({
+                errorElement: 'label',
+                errorClass: 'error',
+                focusInvalid: false,
+                ignore: ".no-validate",
+                errorPlacement: function (error, element) {
+                    if (element.attr("type") == "file") {
+                        var _divSelect = element.closest('.form-control-file');
+
+                        // error.css("margin-left", "5px")
+                        error.addClass("validate-answers-text");
+
+                        error.insertAfter(_divSelect);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                rules: {
+                    'Categoria.Codigo': {
+                        required: true
+                    },
+                    Titulo: {
+                        required: true
+                    },
+                    Tags: {
+                        required: true
+                    },
+                    Descricao: {
+                        required: true,
+                        minlength: 50
+                    },
+                    'Historico.Novidade':{
+                        required: !@(ViewBag.IsCreate)
+
+                        },
+                    file: {
+                        required: @(ViewBag.IsCreate)
+                        }
+
+                },
+                highlight: function (e) {
+                    $(e).closest('.validate-answers').removeClass('has-success').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.validate-answers').removeClass('has-error').addClass('has-success');
+                    $(e).remove();
+                },
+
+                messages: {
+                    'Categoria.Codigo': {
+                        required: "Categoria é obrigatória."
+                    },
+                    Titulo: {
+                        required: "O campo título é obrigatório."
+                    },
+                    Tags: {
+                        required: "O campo tag é obrigatório."
+                    },
+                    Descricao: {
+                        required: "O campo descrição é obrigatório.",
+                        minlength: "Descrição muito curta."
+                    },
+                    'Historico.Novidade': {
+                        required: "O campo novidade é obrigatório.",
+                        minlength: "Novidade muito curta."
+                    },
+                    file: {
+                        required: "O campo arquivo é obrigatório."
+                    }
+
+                }
+            });
+
+
+        });
+    </script>
+}

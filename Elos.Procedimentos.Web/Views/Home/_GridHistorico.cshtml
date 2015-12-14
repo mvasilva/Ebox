@@ -1,0 +1,44 @@
+﻿@using ELOS.Framework.Helpers
+@using ELOS.Framework.Util
+@using Elos.Procedimentos.Model
+@model IEnumerable<Elos.Procedimentos.Model.DocumentoHistorico>
+
+@if (Model != null && Model.Count() > 0)
+{
+
+    <table class="table table-bordered table-hover text-center">
+        <thead>
+            <tr class="actionHeader">
+                <td style="text-align: left; color: #ffffff; border: none; font-size: 18px" colspan="3">
+                    Histórico
+                </td>
+            </tr>
+            <tr>
+                <th style="vertical-align: middle; width:20%; text-align:center;">Usuário</th>
+                <th style="vertical-align: middle; width:10%; text-align:center;">Data</th>
+                <th style="vertical-align: middle;  text-align:center;">Alteração</th>
+
+            </tr>
+
+
+        </thead>
+        <tbody>
+
+            @foreach (DocumentoHistorico item in Model)
+            {
+                <tr>
+                    <td style="vertical-align: middle; text-align:left;">@item.Usuario.Nome</td>
+                    <td style="vertical-align: middle; ">@string.Format("{0:dd/MM/yyyy HH:mm:ss}", item.DataAtualizacao)</td>
+                    <td style="vertical-align: middle; text-align:left;">@item.Novidade</td>
+                </tr>
+
+            }
+
+
+
+
+        </tbody>
+    </table>
+
+
+}

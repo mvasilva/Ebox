@@ -1,0 +1,18 @@
+﻿tr th.sorting{
+    cursor:pointer;
+    padding-right:15px !important;
+}
+
+
+
+tr th.sorting_N{
+   background:url('../img/sort_both.png') no-repeat right center; 
+}
+
+tr th.sorting_asc{
+   background:url('../img/sort_asc.png') no-repeat right center; 
+}
+
+tr th.sorting_desc{
+   background:url('../img/sort_desc.png') no-repeat right center; 
+}

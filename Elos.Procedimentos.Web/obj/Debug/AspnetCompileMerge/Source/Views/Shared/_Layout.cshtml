@@ -1,0 +1,97 @@
+﻿@using ELOS.Framework.Helpers
+@using ELOS.Framework.Util
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <title>ELOS Ebox</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="@Url.Content("~/img/logo48.png")" />
+
+    @Scripts.Render("~/jsBundle")
+    @Styles.Render("~/css/cssBundle")
+
+    <!-- HTML5 shim e Respond.js IE8 para dar suporte a elementos HTML 5 e media queries -->
+    <!--[if lt IE 9]>
+        <script src="@Url.Content("~/js/html5shiv.js")"></script>
+        <script src="@Url.Content("~/js/respond.min.js")"></script>
+    <![endif]-->
+
+    
+    <script>
+        @Html.call_KeepAliveJson()
+
+        $(document).ready(function () {
+
+            $('.explicacao').tooltip();
+            $('input[type=file]').bootstrapFileInput();
+
+            ActiveItemMenu();
+
+        });
+
+
+        function ActiveItemMenu() {
+
+
+
+            $("li.active").each(function (index) {
+
+                if ($(this).attr("rel") != "") {
+
+                    $("#" + $(this).attr("rel")).addClass("active");
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</head>
+<body>
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">&nbsp;</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                @Html.BuildMenu(Util.UsuarioPermissoesMenu(Util.ModuloAtual))
+                 
+                <ul class="nav navbar-nav pull-right">
+                    <li class="menu-modulos">
+                        <a class="menu-modulos" id="a-menu-modulos" href="#" data-container="body" data-toggle="popover" data-target="#divMenuModulos"><i class="glyphicon glyphicon-th"></i></a>
+                    </li>
+                    @Html.MinhaConta(Util.UsuarioLogado,Url.Action("LogOut","Public"))
+                </ul>
+            </div>
+        </div>
+    </div>
+    @Html.BuildMenuModulo()
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <div id="footer">
+        <hr />
+        <div class="container">
+            <p class="text-muted credit">
+                &copy;&nbsp; @DateTime.Now.ToString("yyyy")&nbsp; Telefônica S.A. Todos os direitos reservados. Versão 1.0
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+

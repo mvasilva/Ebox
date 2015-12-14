@@ -1,0 +1,13 @@
+﻿@model  DateTime?
+@{
+    Layout = null;
+    if (Model.HasValue)
+    {
+        @Model.Value.ToString("dd/MM/yyyy");
+    }
+    else
+    {
+        <text></text>
+    }
+
+}

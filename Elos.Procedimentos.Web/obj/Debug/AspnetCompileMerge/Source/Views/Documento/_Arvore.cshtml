@@ -1,0 +1,31 @@
+﻿@if (ViewBag.ControleAcesso)
+{
+    <div style="text-align:right;">
+        <a href="#" class="" id="aCriar"><span class="glyphicon glyphicon-plus" style="font-size:20px;" data-toggle="tooltip" title="Criar Novo"></span></a>
+        <a href="#" class="" id="aRenomear"><span class="glyphicon glyphicon-edit" style="font-size:20px;" data-toggle="tooltip" title="Renomear"></span></a>
+        <a href="#" class="" id="aAtivar"><span class="glyphicon glyphicon-off" style="font-size:20px;" data-toggle="tooltip" title="Publicar/Não Publicar"></span></a>
+        <a href="#" class="" id="aDeletar"><span class="glyphicon glyphicon-trash" style="font-size:20px;" data-toggle="tooltip" title="Deletar"></span></a>
+        <br />
+    </div>
+    <br />
+}
+
+<div>
+    <input type="text" id="txtBusca" class="form-control input-sm" />
+</div>
+
+<div id="divArvore">
+
+
+
+
+</div>
+@if (ViewBag.ControleAcesso)
+{
+
+    <blockquote style="margin-top:40px;">
+        Legenda: <br />
+        <span class="glyphicon glyphicon-folder-close text-danger" style="font-size:16px;"></span> Não publicada <br />
+        <span class="glyphicon glyphicon-folder-open text-success" style="font-size:16px;"></span> Publicada <br />
+    </blockquote>
+}

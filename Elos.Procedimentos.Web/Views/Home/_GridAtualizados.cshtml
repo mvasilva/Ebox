@@ -1,0 +1,62 @@
+﻿@using ELOS.Framework.Helpers
+@using ELOS.Framework.Util
+@using Elos.Procedimentos.Model
+@model IEnumerable<Elos.Procedimentos.Model.Documento>
+
+@if (Model != null)
+{
+
+    <table class="table table-bordered table-hover text-center" style="margin-top:20px;">
+        <thead>
+            <tr class="actionHeader">
+                <td style="color: #ffffff; border: none; font-size: 18px" colspan="4">
+                    Últimos documentos atualizados
+                </td>
+            </tr>
+            <tr>
+                <th style="vertical-align: middle; width:5%; text-align:center;">Tipo</th>
+                <th style="vertical-align: middle;  text-align:center;">Nome</th>                
+                <th style="vertical-align: middle;  text-align:center;">Atual. em:</th>
+                <th style="vertical-align: middle;  text-align:center;"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.Count() > 0)
+            {
+                foreach (Documento item in Model)
+                {
+                    <tr>
+
+                        <td style="vertical-align: middle; text-align:center; ">
+                            <i class="@(item.Tipo.Icone)" id="icone-tipo-@(item.Codigo)" data-toggle="tooltip" data-placement="left" title="@(item.Tipo.Nome)" style="font-size:34px;"></i>
+                        </td>
+                        <td style="vertical-align: middle; text-align:left;">@item.Titulo</td>
+                        <td style="vertical-align: middle; ">@string.Format("{0:dd/MM/yyyy HH:mm:ss}", item.Historico.DataAtualizacao)</td>
+                        <td style="vertical-align: middle;">
+                            <a href="@Url.Action("DownloadFile","Documento", new { Documento = item.Codigo })" data-toggle="tooltip" data-original-title="Baixar" class="baixar">
+                                <i class="glyphicon glyphicon-download-alt" style="font-size:20px;"></i>
+                            </a>
+                            <a href="#" data-toggle="tooltip" data-original-title="Histórico" data-documento-id="@(item.Codigo)" class="aHistorico">
+                                <i class="glyphicon glyphicon-calendar" style="font-size:20px;"></i>
+                            </a>                            
+                        </td>                        
+                    </tr>
+
+                }
+
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">Nenhum registro encontrado</td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+
+
+}

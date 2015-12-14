@@ -1,0 +1,75 @@
+﻿@using ELOS.Framework.Util
+@using ELOS.Framework.Helpers
+
+<div class='well' style='margin-bottom:0px;'>
+
+    <div class="title">
+        <h2>Notificação</h2>
+        <hr />
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>Usuários</label>
+            <br />
+            <div class="form-group col-md-4">
+                <label>Perfil</label>
+                <br />
+                @Html.ListBox("cboPerfil", ViewBag.Perfil as MultiSelectList, new { @class = "form-control input-sm selectpicker", data_selected_text_format = "count>2", title = "Todos", id = "cboPerfil" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group; col-md-3">
+            <label>Data de envio:</label>
+            <br>
+            <input class="form-control input-sm" id="txtDataReferencia">
+            <br />
+        </div>
+
+
+        <div class="form-group; col-md-12">
+            <label>Descrição</label>
+            <textarea class="form-control" id="TctCricao" placeholder="Breve descrição do conteúdo" rows="3"></textarea>
+            <br />
+        </div>
+
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                    <tr class="actionHeader">
+                        <td colspan="12" style="text-align: left; border: none; font-size:16px; color: #ffffff;">Notificar</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Procedimentos</th>
+                        <th colspan="6">O que há de novo?</th>
+                        <th colspan="2">Enviar</th>
+                        <th colspan="1">Retirar da lista</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">Modem DLink 500B</td>
+                        <td colspan="6">texttexttexttexttexttexttexttexttext</td>
+                        <td colspan="2" class="checkPermissao" style="text-align: center;">
+                            <input type="checkbox" value="true" checked>
+                        </td>
+                        <td colspan="1" style="text-align: center;">
+                            <a href="#" data-target="#deletarModal" data-original-title="Apagar" data-toggle="tooltip" class="deletar">
+                                <i class="glyphicon glyphicon-trash" style="font-size:20px" ;></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-default">Enviar</button>
+        </div>
+    </div>
+</div>
+
+
+

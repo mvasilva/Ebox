@@ -1,0 +1,117 @@
+﻿@model ELOS.Framework.Model.Usuario
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <title>Qualidade</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @Scripts.Render("~/jsLoginBundle")
+    @Styles.Render("~/css/cssBundle")
+
+
+    <!-- HTML5 shim e Respond.js IE8 para dar suporte a elementos HTML 5 e media queries -->
+    <!--[if lt IE 9]>
+        <script src="@Url.Content("~/js/html5shiv.js")"></script>
+        <script src="@Url.Content("~/js/respond.min.js")"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.form-signin').validate({
+                errorElement: 'span',
+                errorClass: 'help-inline',
+                focusInvalid: false,
+                ignore: ".no-validate",
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Senha: {
+                        required: true,
+                        minlength: 4
+                    }
+
+                },
+                highlight: function (e) {
+                    $(e).closest('.form-section').addClass('error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-section').removeClass('error')
+                    $(e).remove();
+                },
+                messages: {
+                    Email: {
+                        required: "O campo email é obrigatório.",
+                        email: "Email inválido."
+                    },
+                    Senha: {
+                        required: "O campo senha é obrigatório.",
+                        minlength: "A senha deve possuir pelo menos 4 caracteres."
+                    }
+
+
+                }
+            });
+
+
+
+        });
+
+
+    </script>
+
+
+</head>
+<body class="login">
+    @using (Html.BeginForm("Login", "Public", FormMethod.Post, new { @class = "form-signin well" }))
+    {
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="~/img/logo128.png" />
+                <h1 style="font-size: 2em; line-height: 15px" class="text-default">Qualidade
+                </h1>
+               
+            </div>
+            <div class="col-md-8">
+                <div class="panel-body">
+                    <div class="form-section">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control login", placeholder = "E-mail" })
+                    </div>
+                    <div class="form-section">
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control login", placeholder = "Senha" })
+                    </div>
+                    <div class="form-section">
+                        <label class="inline">
+                            @Html.CheckBoxFor(model => model.IsPermanecerLogado)
+                            <span>@Html.DisplayNameFor(model => model.IsPermanecerLogado)</span>
+                        </label>
+                    </div>
+
+                    @if (Model != null && Model.Codigo == -1)
+                    {
+                        <div class="alert alert-danger">
+                            <strong><i class='icon-remove'></i>Nome de usuário incorreto ou senha incorreta.</strong>
+                            <br />
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-block btn-default"><span>Entrar</span></button>
+                </div>
+            </div>
+        </div>
+@*<p class="text-center">Por favor, faça o login.</p>*@
+
+     
+    }
+</body>
+</html>
